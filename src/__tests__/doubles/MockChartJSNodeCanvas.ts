@@ -1,9 +1,15 @@
 import { Readable } from 'stream'
 import { ChartConfiguration } from 'chart.js'
-import { MimeType } from 'chartjs-node-canvas'
-import { IChartJSNodeCanvas } from '../../ChartJSNodeCanvas'
+import { ChartJSNodeCanvasOptions, MimeType } from 'chartjs-node-canvas'
+import { IChartJSNodeCanvas } from '../../types/chartJSNodeCanvas'
 
-export default class StubChartJSNodeCanvas implements IChartJSNodeCanvas {
+export default class MockChartJSNodeCanvas implements IChartJSNodeCanvas {
+	public static constructorOptions: ChartJSNodeCanvasOptions[] = []
+
+	public constructor(options: ChartJSNodeCanvasOptions) {
+		MockChartJSNodeCanvas.constructorOptions?.push(options)
+	}
+
 	public async renderToDataURL(
 		_configuration: ChartConfiguration,
 		_mimeType?: MimeType

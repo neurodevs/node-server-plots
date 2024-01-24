@@ -4,15 +4,24 @@ import AbstractSpruceTest, {
 	errorAssert,
 } from '@sprucelabs/test-utils'
 import { SubplotGrapher } from '../../SubplotGrapher'
-import StubChartJSNodeCanvas from '../doubles/StubChartJSNodeCanvas'
+import MockChartJSNodeCanvas from '../doubles/MockChartJSNodeCanvas'
 
 export default class SubplotGrapherTest extends AbstractSpruceTest {
 	private static grapher: SubplotGrapher
 
 	protected static async beforeEach() {
 		await super.beforeEach()
+
+		SubplotGrapher.CanvasClass = MockChartJSNodeCanvas
+
 		this.grapher = this.Grapher()
 		assert.isTruthy(this.grapher)
+	}
+
+	@test()
+	protected static async canSetAndGetChartJSNodeCanvasClass() {
+		SubplotGrapher.CanvasClass = MockChartJSNodeCanvas
+		assert.isEqual(SubplotGrapher.CanvasClass, MockChartJSNodeCanvas)
 	}
 
 	@test()
@@ -25,9 +34,21 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 	}
 
 	@test()
-	protected static async canSetAndGetChartJSNodeCanvasClass() {
-		SubplotGrapher.CanvasClass = StubChartJSNodeCanvas
-		assert.isEqual(SubplotGrapher.CanvasClass, StubChartJSNodeCanvas)
+	protected static async runInstantiatesCanvasClass() {
+		await this.run()
+
+		assert.isLength(MockChartJSNodeCanvas.constructorOptions, 1)
+		assert.isEqualDeep(MockChartJSNodeCanvas.constructorOptions[0], {
+			height: 300,
+			width: 800,
+		})
+	}
+
+	private static async run() {
+		await this.grapher.run({
+			savePath: 'asdf',
+			plotConfigs: [],
+		})
 	}
 
 	private static Grapher() {
