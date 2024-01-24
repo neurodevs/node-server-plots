@@ -1,7 +1,7 @@
 import { Readable } from 'stream'
 import { ChartConfiguration } from 'chart.js'
 import { ChartJSNodeCanvasOptions, MimeType } from 'chartjs-node-canvas'
-import { IChartJSNodeCanvas } from '../../types/chartJSNodeCanvas'
+import { IChartJSNodeCanvas } from '../../types/chartJSNodeCanvas.types'
 
 export default class MockChartJSNodeCanvas implements IChartJSNodeCanvas {
 	public static constructorOptions: ChartJSNodeCanvasOptions[] = []

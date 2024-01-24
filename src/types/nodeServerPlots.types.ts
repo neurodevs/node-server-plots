@@ -7,4 +7,9 @@ export interface GrapherRunOptions {
 	plotConfigs: PlotConfig[]
 }
 
+export interface SubplotGrapherOptions {
+	subplotHeight: number
+	subplotWidth: number
+}
+
 export interface PlotConfig {}
