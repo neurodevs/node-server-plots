@@ -64,5 +64,9 @@
     "moduleNameMapper": {
       "^#spruce/(.*)$": "<rootDir>/build/.spruce/$1"
     }
+  },
+  "dependencies": {
+    "chart.js": "^4.4.1",
+    "chartjs-node-canvas": "^4.1.6"
   }
 }
