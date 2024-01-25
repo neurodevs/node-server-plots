@@ -1,6 +1,6 @@
 {
   "name": "@neurodevs/node-server-plots",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": "https://github.com/neurodevs/node-server-plots.git",
   "scripts": {
     "build.ci": "yarn build.tsc && yarn build.resolve-paths && yarn lint",
