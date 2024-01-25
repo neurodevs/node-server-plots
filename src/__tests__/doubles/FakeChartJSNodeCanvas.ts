@@ -1,13 +1,17 @@
 import { Readable } from 'stream'
 import { ChartConfiguration } from 'chart.js'
 import { ChartJSNodeCanvasOptions, MimeType } from 'chartjs-node-canvas'
-import { IChartJSNodeCanvas } from '../../types/chartJSNodeCanvas.types'
+import {
+	IChartJSNodeCanvas,
+	RenderToBufferOptions,
+} from '../../types/chartJSNodeCanvas.types'
 
-export default class MockChartJSNodeCanvas implements IChartJSNodeCanvas {
+export default class FakeChartJSNodeCanvas implements IChartJSNodeCanvas {
 	public static constructorOptions: ChartJSNodeCanvasOptions[] = []
+	public static renderToBufferOptions: RenderToBufferOptions[] = []
 
 	public constructor(options: ChartJSNodeCanvasOptions) {
-		MockChartJSNodeCanvas.constructorOptions?.push(options)
+		FakeChartJSNodeCanvas.constructorOptions?.push(options)
 	}
 
 	public async renderToDataURL(
@@ -25,9 +29,13 @@ export default class MockChartJSNodeCanvas implements IChartJSNodeCanvas {
 	}
 
 	public async renderToBuffer(
-		_configuration: ChartConfiguration,
-		_mimeType?: MimeType
+		configuration: ChartConfiguration,
+		mimeType?: MimeType
 	): Promise<Buffer> {
+		FakeChartJSNodeCanvas.renderToBufferOptions.push({
+			configuration,
+			mimeType,
+		})
 		return {} as Buffer
 	}
 

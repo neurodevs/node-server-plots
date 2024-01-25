@@ -72,3 +72,8 @@ export interface IChartJSNodeCanvas {
 export type ChartJSNodeCanvasClass = new (
 	options: ChartJSNodeCanvasOptions
 ) => IChartJSNodeCanvas
+
+export interface RenderToBufferOptions {
+	configuration: ChartConfiguration
+	mimeType?: MimeType
+}
