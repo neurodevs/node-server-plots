@@ -7,10 +7,10 @@ import AbstractSpruceTest, {
 } from '@sprucelabs/test-utils'
 import { ChartTypeRegistry } from 'chart.js'
 import { MimeType } from 'chartjs-node-canvas'
+import FakeChartJSNodeCanvas from '../../doubles/FakeChartJSNodeCanvas'
+import fakeSharp, { FakeSharpTracker } from '../../doubles/fakeSharp'
 import SubplotGrapher from '../../SubplotGrapher'
 import { PlotConfig } from '../../types/nodeServerPlots.types'
-import FakeChartJSNodeCanvas from '../doubles/FakeChartJSNodeCanvas'
-import fakeSharp, { FakeSharpTracker } from '../doubles/fakeSharp'
 
 export default class SubplotGrapherTest extends AbstractSpruceTest {
 	private static grapher: SubplotGrapher
