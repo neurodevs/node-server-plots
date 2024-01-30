@@ -5,7 +5,7 @@ import sharp from 'sharp'
 import { ChartJSNodeCanvasClass } from './types/chartJSNodeCanvas.types'
 import {
 	Grapher,
-	GrapherRunOptions,
+	GrapherGenerateOptions,
 	PlotConfig,
 	SubplotGrapherOptions,
 } from './types/nodeServerPlots.types'
@@ -31,7 +31,7 @@ export default class SubplotGrapher implements Grapher {
 		this.mimeType = mimeType
 	}
 
-	public async generate(options: GrapherRunOptions) {
+	public async generate(options: GrapherGenerateOptions) {
 		const { savePath, plotConfigs } = assertOptions(options, [
 			'savePath',
 			'plotConfigs',

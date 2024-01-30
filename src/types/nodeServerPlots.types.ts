@@ -1,10 +1,10 @@
 import { MimeType } from 'chartjs-node-canvas'
 
 export interface Grapher {
-	generate(options: GrapherRunOptions): Promise<void>
+	generate(options: GrapherGenerateOptions): Promise<void>
 }
 
-export interface GrapherRunOptions {
+export interface GrapherGenerateOptions {
 	savePath: string
 	plotConfigs: PlotConfig[]
 }
@@ -14,6 +14,7 @@ export interface SubplotGrapherOptions {
 	subplotWidth: number
 	mimeType?: MimeType
 }
+
 export interface PlotConfig {
 	title: string
 	datasets: Dataset[]
