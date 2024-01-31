@@ -59,16 +59,17 @@ export default class SubplotGrapher implements Grapher {
 				width: this.subplotWidth,
 				height: this.subplotHeight * plotConfigs.length,
 				channels: 4,
-				background: { r: 255, g: 255, b: 255, alpha: 0 },
+				background: { r: 255, g: 255, b: 255, alpha: 1 },
 			},
 		})
 
+		const images = []
+
 		for (let i = 0; i < buffers.length; i++) {
-			sharpInstance.composite([
-				{ input: buffers[i], top: this.subplotHeight * i, left: 0 },
-			])
+			images.push({ input: buffers[i], top: this.subplotHeight * i, left: 0 })
 		}
 
+		sharpInstance.composite(images)
 		await sharpInstance.toFile(savePath)
 	}
 

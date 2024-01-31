@@ -30,7 +30,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 		this.subplotHeight = randomInt(100, 1000)
 		this.subplotWidth = randomInt(100, 1000)
 
-		this.savePath = 'asdf'
+		this.savePath = generateId()
 		this.plotConfigs = [
 			this.generatePlotConfig(),
 			this.generatePlotConfig(),
@@ -111,13 +111,16 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 				width: this.subplotWidth,
 				height: this.subplotHeight * this.expectedNumSubplots,
 				channels: 4,
-				background: { r: 255, g: 255, b: 255, alpha: 0 },
+				background: { r: 255, g: 255, b: 255, alpha: 1 },
 			},
 		})
 
-		assert.isLength(FakeSharpTracker.compositeCalls, this.expectedNumSubplots)
-		for (let i = 0; i < this.expectedNumSubplots; i++) {
-			const calledImage = FakeSharpTracker.compositeCalls[i][0]
+		assert.isLength(FakeSharpTracker.compositeCalls, 1)
+
+		const calledImages = FakeSharpTracker.compositeCalls[0]
+
+		for (let i = 0; i < calledImages.length; i++) {
+			const calledImage = calledImages[i]
 
 			assert.doesInclude(calledImage, {
 				top: this.subplotHeight * i,
