@@ -11,6 +11,9 @@ export * from './types/sharp.types'
 
 // Test doubles
 
+export { default as FakeSubplotGrapher } from './testDoubles/FakeSubplotGrapher'
+export * from './testDoubles/FakeSubplotGrapher'
+
 export { default as FakeChartJSNodeCanvas } from './testDoubles/FakeChartJSNodeCanvas'
 export * from './testDoubles/FakeChartJSNodeCanvas'
 
