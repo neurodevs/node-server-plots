@@ -147,9 +147,10 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 	private static generateDataset() {
 		return {
 			label: generateId(),
-			data: Array.from({ length: this.numSamplesPerDataset }, () =>
-				Math.random()
-			),
+			data: Array.from({ length: this.numSamplesPerDataset }, () => {
+				return { x: Math.random(), y: Math.random() }
+			}),
+			color: generateId(),
 		}
 	}
 
@@ -160,10 +161,11 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 			type: 'line' as keyof ChartTypeRegistry,
 			data: {
 				labels: [],
-				datasets: datasets.map(({ label, data }) => {
+				datasets: datasets.map(({ label, data, color }) => {
 					return {
 						label,
 						data,
+						borderColor: color,
 						fill: false,
 					}
 				}),

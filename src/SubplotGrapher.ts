@@ -80,10 +80,11 @@ export default class SubplotGrapher implements Grapher {
 			type: 'line' as keyof ChartTypeRegistry,
 			data: {
 				labels: [],
-				datasets: datasets.map(({ label, data }) => {
+				datasets: datasets.map(({ label, data, color }) => {
 					return {
 						label,
 						data,
+						borderColor: color,
 						fill: false,
 					}
 				}),

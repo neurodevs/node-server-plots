@@ -1,3 +1,4 @@
+import { ScatterDataPoint } from 'chart.js'
 import { MimeType } from 'chartjs-node-canvas'
 
 export interface Grapher {
@@ -26,5 +27,6 @@ export interface PlotConfig {
 
 export interface Dataset {
 	label: string
-	data: number[]
+	data: ScatterDataPoint[]
+	color: string
 }
