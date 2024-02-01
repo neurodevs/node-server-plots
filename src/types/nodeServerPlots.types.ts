@@ -1,5 +1,4 @@
 import { MimeType } from 'chartjs-node-canvas'
-import SubplotGrapher from '../SubplotGrapher'
 
 export interface Grapher {
 	generate(options: GrapherGenerateOptions): Promise<void>
@@ -18,7 +17,7 @@ export interface SubplotGrapherOptions {
 
 export type SubplotGrapherClass = new (
 	options: SubplotGrapherOptions
-) => SubplotGrapher
+) => Grapher
 
 export interface PlotConfig {
 	title: string
