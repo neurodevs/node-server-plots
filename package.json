@@ -1,6 +1,6 @@
 {
   "name": "@neurodevs/node-server-plots",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "main": "build/index.js",
   "repository": {
     "type": "git",
@@ -70,6 +70,7 @@
     }
   },
   "dependencies": {
+    "@types/chart.js": "^2.9.41",
     "chart.js": "^3.5.1",
     "chartjs-adapter-date-fns": "^3.0.0",
     "chartjs-node-canvas": "^4.1.6",
