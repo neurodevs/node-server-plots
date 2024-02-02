@@ -10,6 +10,7 @@ import {
 	SubplotGrapherOptions,
 } from './types/nodeServerPlots.types'
 import { sharpType } from './types/sharp.types'
+import 'chartjs-adapter-date-fns'
 
 export default class SubplotGrapher implements Grapher {
 	public static CanvasClass: ChartJSNodeCanvasClass = ChartJSNodeCanvas
