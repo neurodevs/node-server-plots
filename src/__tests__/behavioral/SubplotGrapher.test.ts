@@ -167,6 +167,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 						data,
 						borderColor: color,
 						fill: false,
+						pointRadius: 0,
 					}
 				}),
 			},
@@ -179,8 +180,8 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 							size: 16,
 						},
 						padding: {
-							top: 10,
-							bottom: 30,
+							top: 30,
+							bottom: 20,
 						},
 					},
 				},

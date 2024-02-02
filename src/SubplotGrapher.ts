@@ -86,6 +86,7 @@ export default class SubplotGrapher implements Grapher {
 						data,
 						borderColor: color,
 						fill: false,
+						pointRadius: 0,
 					}
 				}),
 			},
@@ -98,8 +99,8 @@ export default class SubplotGrapher implements Grapher {
 							size: 16,
 						},
 						padding: {
-							top: 10,
-							bottom: 30,
+							top: 30,
+							bottom: 20,
 						},
 					},
 				},
