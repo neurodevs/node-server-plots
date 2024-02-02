@@ -185,6 +185,17 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 						},
 					},
 				},
+				scales: {
+					x: {
+						type: 'time',
+						time: {
+							unit: 'millisecond',
+							displayFormats: {
+								millisecond: 'second',
+							},
+						},
+					},
+				},
 			},
 		}
 	}

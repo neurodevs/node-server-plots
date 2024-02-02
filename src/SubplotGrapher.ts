@@ -10,6 +10,7 @@ import {
 	SubplotGrapherOptions,
 } from './types/nodeServerPlots.types'
 import { sharpType } from './types/sharp.types'
+import 'chartjs-adapter-date-fns'
 
 export default class SubplotGrapher implements Grapher {
 	public static CanvasClass: ChartJSNodeCanvasClass = ChartJSNodeCanvas
@@ -101,6 +102,17 @@ export default class SubplotGrapher implements Grapher {
 						padding: {
 							top: 30,
 							bottom: 20,
+						},
+					},
+				},
+				scales: {
+					x: {
+						type: 'time',
+						time: {
+							unit: 'millisecond',
+							displayFormats: {
+								millisecond: 'second',
+							},
 						},
 					},
 				},
