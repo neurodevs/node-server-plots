@@ -1,6 +1,6 @@
 {
   "name": "@neurodevs/node-server-plots",
-  "version": "0.1.14",
+  "version": "0.1.15",
   "main": "build/index.js",
   "repository": {
     "type": "git",
@@ -27,7 +27,8 @@
     "watch.build.dev": "tsc-watch --sourceMap --onCompilationComplete 'yarn post.watch.build'",
     "watch.lint": "concurrently 'yarn lint' \"chokidar 'src/**/*' -c 'yarn lint.tsc'\"",
     "watch.rebuild": "yarn clean.all && yarn && yarn watch.build.dev",
-    "watch.tsc": "tsc -w"
+    "watch.tsc": "tsc -w",
+    "preinstall": "yarn config set ignore-engines true"
   },
   "devDependencies": {
     "@sprucelabs/jest-json-reporter": "^7.0.152",
