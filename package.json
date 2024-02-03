@@ -1,6 +1,6 @@
 {
   "name": "@neurodevs/node-server-plots",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "main": "build/index.js",
   "repository": {
     "type": "git",
@@ -28,6 +28,7 @@
     "watch.lint": "concurrently 'yarn lint' \"chokidar 'src/**/*' -c 'yarn lint.tsc'\"",
     "watch.rebuild": "yarn clean.all && yarn && yarn watch.build.dev",
     "watch.tsc": "tsc -w",
+    "_commentAboutBelowLine": "The preinstall script below is required for proper 'sharp' installation",
     "preinstall": "yarn config set ignore-engines true"
   },
   "devDependencies": {
