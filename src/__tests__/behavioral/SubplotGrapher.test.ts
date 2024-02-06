@@ -164,7 +164,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 			label: generateId(),
 			data: Array.from({ length: this.numSamplesPerDataset }, (_, i) => {
 				return { x: i.toString(), y: yMin + Math.random() }
-			}),
+			}) as any,
 			color: this.randomColor(),
 		}
 		return newLocal
