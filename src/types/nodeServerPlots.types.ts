@@ -23,10 +23,23 @@ export type SubplotGrapherClass = new (
 export interface PlotConfig {
 	title: string
 	datasets: Dataset[]
+	verticalLines?: number[]
 }
 
 export interface Dataset {
 	label: string
 	data: ScatterDataPoint[]
 	color: string
+}
+
+export interface VerticalLineAnnotations {
+	[key: string]: VerticalLineAnnotation
+}
+
+export interface VerticalLineAnnotation {
+	type: string
+	xMin: number
+	xMax: number
+	borderColor: string
+	borderWidth: number
 }

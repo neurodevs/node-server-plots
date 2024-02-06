@@ -1,6 +1,7 @@
 import { assertOptions } from '@sprucelabs/schema'
-import { ChartTypeRegistry } from 'chart.js'
+import { Chart, ChartTypeRegistry } from 'chart.js'
 import { ChartJSNodeCanvas, MimeType } from 'chartjs-node-canvas'
+import annotationPlugin from 'chartjs-plugin-annotation'
 import sharp from 'sharp'
 import { ChartJSNodeCanvasClass } from './types/chartJSNodeCanvas.types'
 import {
@@ -8,10 +9,11 @@ import {
 	GrapherGenerateOptions,
 	PlotConfig,
 	SubplotGrapherOptions,
+	VerticalLineAnnotations,
 } from './types/nodeServerPlots.types'
 import { sharpType } from './types/sharp.types'
 
-import {} from 'chartjs-adapter-date-fns'
+Chart.register(annotationPlugin)
 
 export default class SubplotGrapher implements Grapher {
 	public static CanvasClass: ChartJSNodeCanvasClass = ChartJSNodeCanvas
@@ -76,7 +78,7 @@ export default class SubplotGrapher implements Grapher {
 	}
 
 	private generateChartConfiguration(plotConfig: PlotConfig) {
-		const { title, datasets } = plotConfig
+		const { title, datasets, verticalLines } = plotConfig
 
 		return {
 			type: 'line' as keyof ChartTypeRegistry,
@@ -107,6 +109,11 @@ export default class SubplotGrapher implements Grapher {
 							bottom: 20,
 						},
 					},
+					annotation: {
+						annotations: verticalLines
+							? this.generateVerticalLineAnnotations(verticalLines)
+							: null,
+					},
 				},
 				scales: {
 					x: {
@@ -125,6 +132,25 @@ export default class SubplotGrapher implements Grapher {
 				},
 			},
 		}
+	}
+
+	private generateVerticalLineAnnotations(xValues: number[]) {
+		const annotations: VerticalLineAnnotations = {}
+
+		for (let i = 0; i < xValues.length; i++) {
+			const lineName = `vertical-line-${i}`
+			const x = xValues[i]
+
+			annotations[lineName] = {
+				type: 'line',
+				xMin: x,
+				xMax: x,
+				borderColor: 'red',
+				borderWidth: 1,
+			}
+		}
+
+		return annotations
 	}
 }
 

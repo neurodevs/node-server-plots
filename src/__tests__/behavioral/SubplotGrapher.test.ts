@@ -13,6 +13,7 @@ import fakeSharp, { FakeSharpTracker } from '../../testDoubles/fakeSharp'
 import {
 	PlotConfig,
 	SubplotGrapherOptions,
+	VerticalLineAnnotations,
 } from '../../types/nodeServerPlots.types'
 
 export default class SubplotGrapherTest extends AbstractSpruceTest {
@@ -184,6 +185,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 				this.generateDataset(2),
 				this.generateDataset(3),
 			],
+			verticalLines: this.generateVerticalLines(),
 		}
 	}
 
@@ -204,7 +206,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 	}
 
 	private static generateChartConfiguration(plotConfig: PlotConfig) {
-		const { title, datasets } = plotConfig
+		const { title, datasets, verticalLines } = plotConfig
 
 		return {
 			type: 'line' as keyof ChartTypeRegistry,
@@ -235,6 +237,11 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 							bottom: 20,
 						},
 					},
+					annotation: {
+						annotations: verticalLines
+							? this.generateVerticalLineAnnotations(verticalLines)
+							: null,
+					},
 				},
 				scales: {
 					x: {
@@ -253,6 +260,36 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 				},
 			},
 		}
+	}
+
+	private static generateVerticalLines() {
+		const numLines = randomInt(1, 5)
+		const lines = []
+
+		for (let i = 0; i < numLines; i++) {
+			lines.push(randomInt(0, this.numSamplesPerDataset))
+		}
+
+		return lines
+	}
+
+	private static generateVerticalLineAnnotations(xValues: number[]) {
+		const annotations: VerticalLineAnnotations = {}
+
+		for (let i = 0; i < xValues.length; i++) {
+			const lineName = `vertical-line-${i}`
+			const x = xValues[i]
+
+			annotations[lineName] = {
+				type: 'line',
+				xMin: x,
+				xMax: x,
+				borderColor: 'red',
+				borderWidth: 1,
+			}
+		}
+
+		return annotations
 	}
 
 	private static get expectedNumSubplots() {
