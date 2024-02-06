@@ -106,21 +106,6 @@ export default class SubplotGrapher implements Grapher {
 						},
 					},
 				},
-				scales: {
-					x: {
-						type: 'time' as const,
-						time: {
-							unit: 'millisecond' as const,
-							displayFormats: {
-								millisecond: 'h:mm:ss aaaa',
-							},
-						},
-						title: {
-							display: true,
-							text: 'Time (seconds)',
-						},
-					},
-				},
 			},
 		}
 	}
