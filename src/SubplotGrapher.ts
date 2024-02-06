@@ -50,7 +50,7 @@ export default class SubplotGrapher implements Grapher {
 			const chartConfiguration = this.generateChartConfiguration(plotConfig)
 
 			const buffer = await canvas.renderToBuffer(
-				chartConfiguration,
+				chartConfiguration as any,
 				this.mimeType
 			)
 			buffers.push(buffer)
@@ -106,7 +106,28 @@ export default class SubplotGrapher implements Grapher {
 						},
 					},
 				},
+				scales: {
+					x: {
+						type: 'linear',
+						title: {
+							display: true,
+							text: 'Time (seconds)',
+						},
+						ticks: {
+							stepSize: 1,
+							callback: xAxisTicksCallback,
+							autoSkip: false,
+							maxRotation: 0,
+						},
+					},
+				},
 			},
 		}
 	}
+}
+
+export function xAxisTicksCallback(value: number, idx: number) {
+	const showLabelEveryXTicks = 5
+	const shouldShowLabel = idx % showLabelEveryXTicks === 0
+	return shouldShowLabel ? value : ''
 }

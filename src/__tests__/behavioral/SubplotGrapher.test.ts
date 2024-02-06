@@ -7,7 +7,7 @@ import AbstractSpruceTest, {
 } from '@sprucelabs/test-utils'
 import { ChartTypeRegistry } from 'chart.js'
 import { MimeType } from 'chartjs-node-canvas'
-import SubplotGrapher from '../../SubplotGrapher'
+import SubplotGrapher, { xAxisTicksCallback } from '../../SubplotGrapher'
 import FakeChartJSNodeCanvas from '../../testDoubles/FakeChartJSNodeCanvas'
 import fakeSharp, { FakeSharpTracker } from '../../testDoubles/fakeSharp'
 import {
@@ -115,7 +115,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 			const expected = {
 				configuration: this.generateChartConfiguration(this.plotConfigs[i]),
 				mimeType: this.mimetype,
-			}
+			} as any
 
 			assert.isEqualDeep(actual, expected)
 		}
@@ -203,6 +203,21 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 						padding: {
 							top: 30,
 							bottom: 20,
+						},
+					},
+				},
+				scales: {
+					x: {
+						type: 'linear',
+						title: {
+							display: true,
+							text: 'Time (seconds)',
+						},
+						ticks: {
+							stepSize: 1,
+							callback: xAxisTicksCallback,
+							autoSkip: false,
+							maxRotation: 0,
 						},
 					},
 				},
