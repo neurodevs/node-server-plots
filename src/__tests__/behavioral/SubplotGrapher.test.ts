@@ -148,6 +148,34 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 		assert.isEqualDeep(FakeSharpTracker.toFileCalls[0], this.savePath)
 	}
 
+	@test()
+	protected static async sortsTimestampsIfNotInOrder() {
+		const plotConfig = {
+			title: generateId(),
+			datasets: [
+				{
+					label: generateId(),
+					data: [
+						{ x: '1', y: 1 },
+						{ x: '3', y: 3 },
+						{ x: '2', y: 2 },
+					],
+					color: 'red',
+				},
+			],
+		} as any
+
+		const chartConfig = this.generateChartConfiguration(plotConfig)
+
+		const expected = [
+			{ x: '1', y: 1 },
+			{ x: '2', y: 2 },
+			{ x: '3', y: 3 },
+		] as any
+
+		assert.isEqualDeep(chartConfig.data.datasets[0].data, expected)
+	}
+
 	private static generatePlotConfig() {
 		return {
 			title: generateId(),
@@ -182,9 +210,11 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 			type: 'line' as keyof ChartTypeRegistry,
 			data: {
 				datasets: datasets.map(({ label, data, color }) => {
+					const sortedData = data.sort((a, b) => Number(a.x) - Number(b.x))
+
 					return {
 						label,
-						data,
+						data: sortedData,
 						borderColor: color,
 						borderWidth: 1,
 						fill: false,

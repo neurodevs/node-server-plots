@@ -82,9 +82,11 @@ export default class SubplotGrapher implements Grapher {
 			type: 'line' as keyof ChartTypeRegistry,
 			data: {
 				datasets: datasets.map(({ label, data, color }) => {
+					const sortedData = data.sort((a, b) => Number(a.x) - Number(b.x))
+
 					return {
 						label,
-						data,
+						data: sortedData,
 						borderColor: color,
 						borderWidth: 1,
 						fill: false,
