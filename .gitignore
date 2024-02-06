@@ -46,3 +46,6 @@ tmp/
 
 yarn.lock
 package-lock.json
+
+# Generated plots
+*.plot.png

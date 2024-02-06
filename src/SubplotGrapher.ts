@@ -81,12 +81,12 @@ export default class SubplotGrapher implements Grapher {
 		return {
 			type: 'line' as keyof ChartTypeRegistry,
 			data: {
-				labels: [],
 				datasets: datasets.map(({ label, data, color }) => {
 					return {
 						label,
 						data,
 						borderColor: color,
+						borderWidth: 1,
 						fill: false,
 						pointRadius: 0,
 					}

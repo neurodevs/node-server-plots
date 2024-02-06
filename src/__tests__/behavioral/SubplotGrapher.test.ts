@@ -10,7 +10,10 @@ import { MimeType } from 'chartjs-node-canvas'
 import SubplotGrapher from '../../SubplotGrapher'
 import FakeChartJSNodeCanvas from '../../testDoubles/FakeChartJSNodeCanvas'
 import fakeSharp, { FakeSharpTracker } from '../../testDoubles/fakeSharp'
-import { PlotConfig } from '../../types/nodeServerPlots.types'
+import {
+	PlotConfig,
+	SubplotGrapherOptions,
+} from '../../types/nodeServerPlots.types'
 
 export default class SubplotGrapherTest extends AbstractSpruceTest {
 	private static grapher: SubplotGrapher
@@ -20,15 +23,17 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 	private static plotConfigs: PlotConfig[]
 	private static mimetype: MimeType
 	private static numSamplesPerDataset: number
+	private static realGrapher: SubplotGrapher
 
-	protected static async beforeEach() {
-		await super.beforeEach()
+	protected static async beforeAll() {
+		await super.beforeAll()
 
-		SubplotGrapher.CanvasClass = FakeChartJSNodeCanvas
-		SubplotGrapher.sharp = fakeSharp
+		this.realGrapher = this.Grapher({ subplotHeight: 300, subplotWidth: 800 })
 
 		this.subplotHeight = randomInt(100, 1000)
 		this.subplotWidth = randomInt(100, 1000)
+
+		this.numSamplesPerDataset = randomInt(10, 100)
 
 		this.savePath = generateId()
 		this.plotConfigs = [
@@ -38,7 +43,17 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 		]
 		this.mimetype = ['image/png', 'image/jpeg'][randomInt(0, 2)] as MimeType
 
-		this.numSamplesPerDataset = randomInt(1, 100)
+		await this.realGrapher.generate({
+			savePath: `src/__tests__/test.plot.png`,
+			plotConfigs: this.plotConfigs,
+		})
+	}
+
+	protected static async beforeEach() {
+		await super.beforeEach()
+
+		SubplotGrapher.CanvasClass = FakeChartJSNodeCanvas
+		SubplotGrapher.sharp = fakeSharp
 
 		this.grapher = this.Grapher()
 		assert.isTruthy(this.grapher)
@@ -137,21 +152,27 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 		return {
 			title: generateId(),
 			datasets: [
-				this.generateDataset(),
-				this.generateDataset(),
-				this.generateDataset(),
+				this.generateDataset(1),
+				this.generateDataset(2),
+				this.generateDataset(3),
 			],
 		}
 	}
 
-	private static generateDataset() {
-		return {
+	private static generateDataset(yMin: number) {
+		const newLocal = {
 			label: generateId(),
-			data: Array.from({ length: this.numSamplesPerDataset }, () => {
-				return { x: Math.random(), y: Math.random() }
+			data: Array.from({ length: this.numSamplesPerDataset }, (_, i) => {
+				return { x: i.toString(), y: yMin + Math.random() }
 			}),
-			color: generateId(),
+			color: this.randomColor(),
 		}
+		return newLocal
+	}
+
+	private static randomColor() {
+		const options = ['red', 'blue', 'green', 'black', 'purple']
+		return options[randomInt(0, options.length)]
 	}
 
 	private static generateChartConfiguration(plotConfig: PlotConfig) {
@@ -160,12 +181,12 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 		return {
 			type: 'line' as keyof ChartTypeRegistry,
 			data: {
-				labels: [],
 				datasets: datasets.map(({ label, data, color }) => {
 					return {
 						label,
 						data,
 						borderColor: color,
+						borderWidth: 1,
 						fill: false,
 						pointRadius: 0,
 					}
@@ -200,11 +221,12 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 		})
 	}
 
-	private static Grapher() {
+	private static Grapher(options?: Partial<SubplotGrapherOptions>) {
 		return new SubplotGrapher({
 			subplotHeight: this.subplotHeight,
 			subplotWidth: this.subplotWidth,
 			mimeType: this.mimetype,
+			...options,
 		})
 	}
 }
