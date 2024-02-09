@@ -5,6 +5,7 @@ import annotationPlugin from 'chartjs-plugin-annotation'
 import sharp from 'sharp'
 import { ChartJSNodeCanvasClass } from './types/chartJSNodeCanvas.types'
 import {
+	Dataset,
 	Grapher,
 	GrapherGenerateOptions,
 	PlotConfig,
@@ -83,18 +84,7 @@ export default class SubplotGrapher implements Grapher {
 		return {
 			type: 'line' as keyof ChartTypeRegistry,
 			data: {
-				datasets: datasets.map(({ label, data, color }) => {
-					const sortedData = data.sort((a, b) => Number(a.x) - Number(b.x))
-
-					return {
-						label,
-						data: sortedData,
-						borderColor: color,
-						borderWidth: 1,
-						fill: false,
-						pointRadius: 0,
-					}
-				}),
+				datasets: this.generateDatasets(datasets),
 			},
 			options: {
 				plugins: {
@@ -132,6 +122,21 @@ export default class SubplotGrapher implements Grapher {
 				},
 			},
 		}
+	}
+
+	private generateDatasets(datasets: Dataset[]) {
+		return datasets.map(({ label, data, color }) => {
+			const sortedData = data.sort((a, b) => Number(a.x) - Number(b.x))
+
+			return {
+				label,
+				data: sortedData,
+				borderColor: color,
+				borderWidth: 1,
+				fill: false,
+				pointRadius: 0,
+			}
+		})
 	}
 
 	private generateVerticalLineAnnotations(xValues: number[]) {

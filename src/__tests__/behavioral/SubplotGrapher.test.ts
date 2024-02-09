@@ -185,7 +185,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 				this.generateDataset(2),
 				this.generateDataset(3),
 			],
-			verticalLines: this.generateVerticalLines(),
+			verticalLines: this.generateRandomVerticalLines(),
 		}
 	}
 
@@ -262,7 +262,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 		}
 	}
 
-	private static generateVerticalLines() {
+	private static generateRandomVerticalLines() {
 		const numLines = randomInt(1, 5)
 		const lines = []
 
