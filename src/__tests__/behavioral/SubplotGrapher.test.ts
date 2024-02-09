@@ -17,7 +17,7 @@ import {
 } from '../../types/nodeServerPlots.types'
 
 export default class SubplotGrapherTest extends AbstractSpruceTest {
-	private static grapher: SubplotGrapher
+	private static fakeGrapher: SubplotGrapher
 	private static subplotHeight: number
 	private static subplotWidth: number
 	private static savePath: string
@@ -56,8 +56,8 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 		SubplotGrapher.CanvasClass = FakeChartJSNodeCanvas
 		SubplotGrapher.sharp = fakeSharp
 
-		this.grapher = this.Grapher()
-		assert.isTruthy(this.grapher)
+		this.fakeGrapher = this.Grapher()
+		assert.isTruthy(this.fakeGrapher)
 	}
 
 	@test()
@@ -84,7 +84,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 	@test()
 	protected static async runThrowsWithMissingRequiredOptions() {
 		// @ts-ignore
-		const err = await assert.doesThrowAsync(() => this.grapher.generate())
+		const err = await assert.doesThrowAsync(() => this.fakeGrapher.generate())
 		errorAssert.assertError(err, 'MISSING_PARAMETERS', {
 			parameters: ['savePath', 'plotConfigs'],
 		})
@@ -297,7 +297,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
 	}
 
 	private static async run() {
-		await this.grapher.generate({
+		await this.fakeGrapher.generate({
 			savePath: this.savePath,
 			plotConfigs: this.plotConfigs,
 		})
