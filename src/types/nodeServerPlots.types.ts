@@ -2,44 +2,42 @@ import { ScatterDataPoint } from 'chart.js'
 import { MimeType } from 'chartjs-node-canvas'
 
 export interface Grapher {
-	generate(options: GrapherGenerateOptions): Promise<void>
+    generate(options: GrapherGenerateOptions): Promise<void>
 }
 
 export interface GrapherGenerateOptions {
-	savePath: string
-	plotConfigs: PlotConfig[]
+    savePath: string
+    plotConfigs: PlotConfig[]
 }
 
 export interface SubplotGrapherOptions {
-	subplotHeight: number
-	subplotWidth: number
-	mimeType?: MimeType
+    subplotHeight: number
+    subplotWidth: number
+    mimeType?: MimeType
 }
 
 export type SubplotGrapherClass = new (
-	options: SubplotGrapherOptions
+    options: SubplotGrapherOptions
 ) => Grapher
 
 export interface PlotConfig {
-	title: string
-	datasets: Dataset[]
-	verticalLines?: number[]
+    title: string
+    datasets: Dataset[]
+    verticalLines?: number[]
 }
 
 export interface Dataset {
-	label: string
-	data: ScatterDataPoint[]
-	color: string
+    label: string
+    data: ScatterDataPoint[]
+    color: string
 }
 
-export interface VerticalLineAnnotations {
-	[key: string]: VerticalLineAnnotation
-}
+export type VerticalLineAnnotations = Record<string, VerticalLineAnnotation>
 
 export interface VerticalLineAnnotation {
-	type: string
-	xMin: number
-	xMax: number
-	borderColor: string
-	borderWidth: number
+    type: string
+    xMin: number
+    xMax: number
+    borderColor: string
+    borderWidth: number
 }
