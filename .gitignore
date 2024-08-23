@@ -48,6 +48,3 @@ yarn.lock
 package-lock.json
 
 **/.spruce/*cache.json
-
-# Generated plot images
-*.png
