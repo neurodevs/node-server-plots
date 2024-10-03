@@ -1,6 +1,6 @@
 {
   "name": "@neurodevs/node-server-plots",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "main": "build/index.js",
   "repository": {
     "type": "git",
@@ -32,11 +32,11 @@
     "preinstall": "yarn config set ignore-engines true"
   },
   "devDependencies": {
-    "@sprucelabs/jest-json-reporter": "^8.0.419",
-    "@sprucelabs/resolve-path-aliases": "^2.0.398",
-    "@sprucelabs/spruce-test-fixtures": "^62.2.325",
-    "@sprucelabs/test": "^9.0.47",
-    "@sprucelabs/test-utils": "^5.1.366",
+    "@sprucelabs/jest-json-reporter": "^8.0.427",
+    "@sprucelabs/resolve-path-aliases": "^2.0.406",
+    "@sprucelabs/spruce-test-fixtures": "^62.3.2",
+    "@sprucelabs/test": "^9.0.48",
+    "@sprucelabs/test-utils": "^5.1.375",
     "@types/node": "^22.7.4",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^9.0.1",
