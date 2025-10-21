@@ -3,7 +3,7 @@ import { Chart, ChartTypeRegistry } from 'chart.js'
 import { ChartJSNodeCanvas, MimeType } from 'chartjs-node-canvas'
 import annotationPlugin from 'chartjs-plugin-annotation'
 import sharp from 'sharp'
-import { ChartJSNodeCanvasClass } from './types/chartJSNodeCanvas.types'
+import { ChartJSNodeCanvasClass } from '../types/chartJSNodeCanvas.types'
 import {
     Dataset,
     Grapher,
@@ -11,8 +11,8 @@ import {
     PlotConfig,
     SubplotGrapherOptions,
     VerticalLineAnnotations,
-} from './types/nodeServerPlots.types'
-import { SharpType } from './types/sharp.types'
+} from '../types/nodeServerPlots.types'
+import { SharpType } from '../types/sharp.types'
 
 Chart.register(annotationPlugin)
 

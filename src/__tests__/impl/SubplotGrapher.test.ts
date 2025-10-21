@@ -7,7 +7,7 @@ import AbstractSpruceTest, {
 } from '@sprucelabs/test-utils'
 import { ChartTypeRegistry } from 'chart.js'
 import { MimeType } from 'chartjs-node-canvas'
-import SubplotGrapher, { xAxisTicksCallback } from '../../SubplotGrapher'
+import SubplotGrapher, { xAxisTicksCallback } from '../../impl/SubplotGrapher'
 import FakeChartJSNodeCanvas from '../../testDoubles/chartjs/FakeChartJSNodeCanvas'
 import fakeSharp, { FakeSharpTracker } from '../../testDoubles/sharp/fakeSharp'
 import {
