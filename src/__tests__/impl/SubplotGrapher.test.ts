@@ -3,8 +3,8 @@ import AbstractSpruceTest, {
     test,
     assert,
     errorAssert,
-    generateId,
 } from '@sprucelabs/test-utils'
+import generateId from '@neurodevs/generate-id'
 import { ChartTypeRegistry } from 'chart.js'
 import { MimeType } from 'chartjs-node-canvas'
 import SubplotGrapher, { xAxisTicksCallback } from '../../impl/SubplotGrapher'
