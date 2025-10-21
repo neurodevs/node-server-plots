@@ -1,11 +1,23 @@
 {
   "name": "@neurodevs/node-server-plots",
   "version": "0.3.12",
-  "main": "build/index.js",
+  "description": "Easily create and save plots server-side on Node",
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "tdd"
+  ],
+  "license": "MIT",
+  "author": "Eric Yates <hello@ericthecurious.com>",
+  "homepage": "https://github.com/neurodevs/node-server-plots",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/neurodevs/node-server-plots.git"
   },
+  "bugs": {
+    "url": "https://github.com/neurodevs/node-server-plots/issues"
+  },
+  "main": "build/index.js",
   "scripts": {
     "build.ci": "yarn run build.tsc && yarn run build.resolve-paths && yarn run lint",
     "build.dev": "yarn run build.tsc --sourceMap ; yarn run resolve-paths.lint",
@@ -31,6 +43,14 @@
     "_commentAboutBelowLine": "The preinstall script below is required for proper 'sharp' installation",
     "preinstall": "yarn config set ignore-engines true"
   },
+  "dependencies": {
+    "@types/chart.js": "^2.9.41",
+    "chart.js": "^3.5.1",
+    "chartjs-node-canvas": "^4.1.6",
+    "chartjs-plugin-annotation": "2.2.1",
+    "date-fns": "^4.1.0",
+    "sharp": "^0.33.5"
+  },
   "devDependencies": {
     "@sprucelabs/jest-json-reporter": "^8.0.542",
     "@sprucelabs/resolve-path-aliases": "^2.0.516",
@@ -48,14 +68,6 @@
     "ts-node": "^10.9.2",
     "tsc-watch": "^6.2.1",
     "typescript": "^5.6.3"
-  },
-  "description": "Easily create and save plots server-side on Node",
-  "skill": {
-    "namespace": "node-server-plots",
-    "upgradeIgnoreList": [
-      "chart.js",
-      "chartjs-plugin-annotation"
-    ]
   },
   "jest": {
     "testRunner": "jest-circus/runner",
@@ -75,12 +87,11 @@
       "^#spruce/(.*)$": "<rootDir>/build/.spruce/$1"
     }
   },
-  "dependencies": {
-    "@types/chart.js": "^2.9.41",
-    "chart.js": "^3.5.1",
-    "chartjs-node-canvas": "^4.1.6",
-    "chartjs-plugin-annotation": "2.2.1",
-    "date-fns": "^4.1.0",
-    "sharp": "^0.33.5"
+  "skill": {
+    "namespace": "node-server-plots",
+    "upgradeIgnoreList": [
+      "chart.js",
+      "chartjs-plugin-annotation"
+    ]
   }
 }
