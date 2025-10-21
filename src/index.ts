@@ -11,11 +11,11 @@ export * from './types/sharp.types'
 
 // Test doubles
 
-export { default as FakeSubplotGrapher } from './testDoubles/FakeSubplotGrapher'
-export * from './testDoubles/FakeSubplotGrapher'
+export { default as FakeSubplotGrapher } from './testDoubles/Grapher/FakeSubplotGrapher'
+export * from './testDoubles/Grapher/FakeSubplotGrapher'
 
-export { default as FakeChartJSNodeCanvas } from './testDoubles/FakeChartJSNodeCanvas'
-export * from './testDoubles/FakeChartJSNodeCanvas'
+export { default as FakeChartJSNodeCanvas } from './testDoubles/chartjs/FakeChartJSNodeCanvas'
+export * from './testDoubles/chartjs/FakeChartJSNodeCanvas'
 
-export { default as fakeSharp } from './testDoubles/fakeSharp'
-export * from './testDoubles/fakeSharp'
+export { default as fakeSharp } from './testDoubles/sharp/fakeSharp'
+export * from './testDoubles/sharp/fakeSharp'

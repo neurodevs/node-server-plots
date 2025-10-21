@@ -4,7 +4,7 @@ import { ChartJSNodeCanvasOptions, MimeType } from 'chartjs-node-canvas'
 import {
     IChartJSNodeCanvas,
     RenderToBufferOptions,
-} from '../types/chartJSNodeCanvas.types'
+} from '../../types/chartJSNodeCanvas.types'
 
 export default class FakeChartJSNodeCanvas implements IChartJSNodeCanvas {
     public static constructorOptions: ChartJSNodeCanvasOptions[] = []

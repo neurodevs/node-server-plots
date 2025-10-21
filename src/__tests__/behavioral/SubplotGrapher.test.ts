@@ -8,8 +8,8 @@ import AbstractSpruceTest, {
 import { ChartTypeRegistry } from 'chart.js'
 import { MimeType } from 'chartjs-node-canvas'
 import SubplotGrapher, { xAxisTicksCallback } from '../../SubplotGrapher'
-import FakeChartJSNodeCanvas from '../../testDoubles/FakeChartJSNodeCanvas'
-import fakeSharp, { FakeSharpTracker } from '../../testDoubles/fakeSharp'
+import FakeChartJSNodeCanvas from '../../testDoubles/chartjs/FakeChartJSNodeCanvas'
+import fakeSharp, { FakeSharpTracker } from '../../testDoubles/sharp/fakeSharp'
 import {
     PlotConfig,
     SubplotGrapherOptions,
