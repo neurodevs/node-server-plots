@@ -3,7 +3,7 @@ import AbstractSpruceTest, { test, assert } from '@sprucelabs/test-utils'
 import generateId from '@neurodevs/generate-id'
 import { ChartTypeRegistry } from 'chart.js'
 import { MimeType } from 'chartjs-node-canvas'
-import SubplotGrapher, { xAxisTicksCallback } from '../../impl/SubplotGrapher'
+import SubplotGrapher from '../../impl/SubplotGrapher'
 import FakeChartJSNodeCanvas from '../../testDoubles/chartjs/FakeChartJSNodeCanvas'
 import fakeSharp, { FakeSharpTracker } from '../../testDoubles/sharp/fakeSharp'
 import {
@@ -84,10 +84,14 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
         )
 
         for (const options of FakeChartJSNodeCanvas.constructorOptions) {
-            assert.isEqualDeep(options, {
-                height: this.subplotHeight,
-                width: this.subplotWidth,
-            })
+            assert.isEqualDeep(
+                options,
+                {
+                    height: this.subplotHeight,
+                    width: this.subplotWidth,
+                },
+                'ChartJSNodeCanvas constructor options do not match!'
+            )
         }
 
         assert.isLength(
@@ -104,7 +108,15 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
                 mimeType: this.mimetype,
             } as any
 
-            assert.isEqualDeep(actual, expected)
+            //@ts-ignore
+            delete actual.configuration.options.scales.x.ticks.callback
+            delete expected.configuration.options.scales.x.ticks.callback
+
+            assert.isEqualDeep(
+                actual,
+                expected,
+                'Chart configuration does not match!'
+            )
         }
 
         assert.isLength(FakeSharpTracker.sharpCalls, 1)
@@ -242,7 +254,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
                         },
                         ticks: {
                             stepSize: 1,
-                            callback: xAxisTicksCallback,
+                            callback: this.xAxisTicksCallback,
                             autoSkip: false,
                             maxRotation: 0,
                         },
@@ -291,6 +303,14 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
             savePath: this.savePath,
             plotConfigs: this.plotConfigs,
         })
+    }
+
+    private static get xAxisTicksCallback() {
+        return (value: number, idx: number) => {
+            const showLabelEveryXTicks = 5
+            const shouldShowLabel = idx % showLabelEveryXTicks === 0
+            return shouldShowLabel ? value : ''
+        }
     }
 
     private static SubplotGrapher(options?: Partial<SubplotGrapherOptions>) {

@@ -1,4 +1,3 @@
-import { assertOptions } from '@sprucelabs/schema'
 import { Chart, ChartTypeRegistry } from 'chart.js'
 import { ChartJSNodeCanvas, MimeType } from 'chartjs-node-canvas'
 import annotationPlugin from 'chartjs-plugin-annotation'
@@ -26,9 +25,13 @@ export default class SubplotGrapher implements Grapher {
     private subplotWidth: number
     private mimeType: MimeType
 
+    private currentSavePath!: string
+    private currentPlotConfigs!: PlotConfig[]
+    private currentPlotConfig!: PlotConfig
+    private currentBuffers!: Buffer<ArrayBufferLike>[]
+
     protected constructor(options: SubplotGrapherOptions) {
         const { subplotHeight, subplotWidth, mimeType = 'image/png' } = options
-        assertOptions(options, [])
 
         this.subplotHeight = subplotHeight
         this.subplotWidth = subplotWidth
@@ -42,49 +45,33 @@ export default class SubplotGrapher implements Grapher {
     public async generate(options: GrapherGenerateOptions) {
         const { savePath, plotConfigs } = options
 
-        const buffers = []
+        this.currentSavePath = savePath
+        this.currentPlotConfigs = plotConfigs
 
-        for (const plotConfig of plotConfigs) {
-            const canvas = new SubplotGrapher.Canvas({
-                height: this.subplotHeight,
-                width: this.subplotWidth,
-            })
-
-            const chartConfiguration =
-                this.generateChartConfiguration(plotConfig)
-
-            const buffer = await canvas.renderToBuffer(
-                chartConfiguration as any,
-                this.mimeType
-            )
-            buffers.push(buffer)
-        }
-
-        const sharpInstance = SubplotGrapher.sharp({
-            create: {
-                width: this.subplotWidth,
-                height: this.subplotHeight * plotConfigs.length,
-                channels: 4,
-                background: { r: 255, g: 255, b: 255, alpha: 1 },
-            },
-        })
-
-        const images = []
-
-        for (let i = 0; i < buffers.length; i++) {
-            images.push({
-                input: buffers[i],
-                top: this.subplotHeight * i,
-                left: 0,
-            })
-        }
-
-        sharpInstance.composite(images)
-        await sharpInstance.toFile(savePath)
+        await this.renderPlotConfigsToBuffers()
+        await this.generateCompositeImage()
     }
 
-    private generateChartConfiguration(plotConfig: PlotConfig) {
-        const { title, datasets, verticalLines } = plotConfig
+    private async renderPlotConfigsToBuffers() {
+        this.currentBuffers = []
+
+        for (const plotConfig of this.currentPlotConfigs) {
+            this.currentPlotConfig = plotConfig
+
+            const buffer = await this.renderCanvasToBuffer()
+            this.currentBuffers.push(buffer)
+        }
+    }
+
+    private async renderCanvasToBuffer() {
+        const canvas = this.ChartJSNodeCanvas()
+        const chartConfig = this.generateChartConfig()
+
+        return await canvas.renderToBuffer(chartConfig as any, this.mimeType)
+    }
+
+    private generateChartConfig() {
+        const { title, datasets, verticalLines } = this.currentPlotConfig
 
         return {
             type: 'line' as keyof ChartTypeRegistry,
@@ -121,7 +108,7 @@ export default class SubplotGrapher implements Grapher {
                         },
                         ticks: {
                             stepSize: 1,
-                            callback: xAxisTicksCallback,
+                            callback: this.xAxisTicksCallback,
                             autoSkip: false,
                             maxRotation: 0,
                         },
@@ -164,10 +151,50 @@ export default class SubplotGrapher implements Grapher {
 
         return annotations
     }
-}
 
-export function xAxisTicksCallback(value: number, idx: number) {
-    const showLabelEveryXTicks = 5
-    const shouldShowLabel = idx % showLabelEveryXTicks === 0
-    return shouldShowLabel ? value : ''
+    private get xAxisTicksCallback() {
+        return (value: number, idx: number) => {
+            const showLabelEveryXTicks = 5
+            const shouldShowLabel = idx % showLabelEveryXTicks === 0
+            return shouldShowLabel ? value : ''
+        }
+    }
+
+    private async generateCompositeImage() {
+        const sharp = this.sharp()
+        sharp.composite(this.imagesFromBuffers)
+
+        await sharp.toFile(this.currentSavePath)
+    }
+
+    private get imagesFromBuffers() {
+        const images = []
+
+        for (let i = 0; i < this.currentBuffers.length; i++) {
+            images.push({
+                input: this.currentBuffers[i],
+                top: this.subplotHeight * i,
+                left: 0,
+            })
+        }
+        return images
+    }
+
+    private ChartJSNodeCanvas() {
+        return new SubplotGrapher.Canvas({
+            height: this.subplotHeight,
+            width: this.subplotWidth,
+        })
+    }
+
+    private sharp() {
+        return SubplotGrapher.sharp({
+            create: {
+                width: this.subplotWidth,
+                height: this.subplotHeight * this.currentPlotConfigs.length,
+                channels: 4,
+                background: { r: 255, g: 255, b: 255, alpha: 1 },
+            },
+        })
+    }
 }
