@@ -27,11 +27,8 @@ export default class SubplotGrapher implements Grapher {
     private mimeType: MimeType
 
     protected constructor(options: SubplotGrapherOptions) {
-        const {
-            subplotHeight,
-            subplotWidth,
-            mimeType = 'image/png',
-        } = assertOptions(options, ['subplotHeight', 'subplotWidth'])
+        const { subplotHeight, subplotWidth, mimeType = 'image/png' } = options
+        assertOptions(options, [])
 
         this.subplotHeight = subplotHeight
         this.subplotWidth = subplotWidth
@@ -43,10 +40,7 @@ export default class SubplotGrapher implements Grapher {
     }
 
     public async generate(options: GrapherGenerateOptions) {
-        const { savePath, plotConfigs } = assertOptions(options, [
-            'savePath',
-            'plotConfigs',
-        ])
+        const { savePath, plotConfigs } = options
 
         const buffers = []
 

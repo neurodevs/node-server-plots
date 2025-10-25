@@ -1,9 +1,5 @@
 import { randomInt } from 'crypto'
-import AbstractSpruceTest, {
-    test,
-    assert,
-    errorAssert,
-} from '@sprucelabs/test-utils'
+import AbstractSpruceTest, { test, assert } from '@sprucelabs/test-utils'
 import generateId from '@neurodevs/generate-id'
 import { ChartTypeRegistry } from 'chart.js'
 import { MimeType } from 'chartjs-node-canvas'
@@ -76,26 +72,6 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
     protected static async canSetAndGetSharpFunction() {
         SubplotGrapher.sharp = fakeSharp
         assert.isEqual(SubplotGrapher.sharp, fakeSharp)
-    }
-
-    @test()
-    protected static async instantiationThrowsWithMissingRequiredOptions() {
-        // @ts-ignore
-        const err = assert.doesThrow(() => new SubplotGrapher())
-        errorAssert.assertError(err, 'MISSING_PARAMETERS', {
-            parameters: ['subplotHeight', 'subplotWidth'],
-        })
-    }
-
-    @test()
-    protected static async runThrowsWithMissingRequiredOptions() {
-        const err = await assert.doesThrowAsync(() =>
-            // @ts-ignore
-            this.fakeGrapher.generate()
-        )
-        errorAssert.assertError(err, 'MISSING_PARAMETERS', {
-            parameters: ['savePath', 'plotConfigs'],
-        })
     }
 
     @test()
