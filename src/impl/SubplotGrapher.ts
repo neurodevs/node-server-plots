@@ -9,6 +9,7 @@ import {
     Grapher,
     GrapherGenerateOptions,
     PlotConfig,
+    SubplotGrapherClass,
     SubplotGrapherOptions,
     VerticalLineAnnotations,
 } from '../types/nodeServerPlots.types'
@@ -17,14 +18,15 @@ import { SharpType } from '../types/sharp.types'
 Chart.register(annotationPlugin)
 
 export default class SubplotGrapher implements Grapher {
-    public static CanvasClass: ChartJSNodeCanvasClass = ChartJSNodeCanvas
+    public static Class?: SubplotGrapherClass
+    public static Canvas: ChartJSNodeCanvasClass = ChartJSNodeCanvas
     public static sharp: SharpType = sharp
 
     private subplotHeight: number
     private subplotWidth: number
     private mimeType: MimeType
 
-    public constructor(options: SubplotGrapherOptions) {
+    protected constructor(options: SubplotGrapherOptions) {
         const {
             subplotHeight,
             subplotWidth,
@@ -36,6 +38,10 @@ export default class SubplotGrapher implements Grapher {
         this.mimeType = mimeType
     }
 
+    public static Create(options: SubplotGrapherOptions) {
+        return new (this.Class ?? this)(options)
+    }
+
     public async generate(options: GrapherGenerateOptions) {
         const { savePath, plotConfigs } = assertOptions(options, [
             'savePath',
@@ -45,7 +51,7 @@ export default class SubplotGrapher implements Grapher {
         const buffers = []
 
         for (const plotConfig of plotConfigs) {
-            const canvas = new SubplotGrapher.CanvasClass({
+            const canvas = new SubplotGrapher.Canvas({
                 height: this.subplotHeight,
                 width: this.subplotWidth,
             })

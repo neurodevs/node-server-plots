@@ -11,25 +11,26 @@ import SubplotGrapher, { xAxisTicksCallback } from '../../impl/SubplotGrapher'
 import FakeChartJSNodeCanvas from '../../testDoubles/chartjs/FakeChartJSNodeCanvas'
 import fakeSharp, { FakeSharpTracker } from '../../testDoubles/sharp/fakeSharp'
 import {
+    Grapher,
     PlotConfig,
     SubplotGrapherOptions,
     VerticalLineAnnotations,
 } from '../../types/nodeServerPlots.types'
 
 export default class SubplotGrapherTest extends AbstractSpruceTest {
-    private static fakeGrapher: SubplotGrapher
+    private static fakeGrapher: Grapher
     private static subplotHeight: number
     private static subplotWidth: number
     private static savePath: string
     private static plotConfigs: PlotConfig[]
     private static mimetype: MimeType
     private static numSamplesPerDataset: number
-    private static realGrapher: SubplotGrapher
+    private static realGrapher: Grapher
 
     protected static async beforeAll() {
         await super.beforeAll()
 
-        this.realGrapher = this.Grapher({
+        this.realGrapher = this.SubplotGrapher({
             subplotHeight: 300,
             subplotWidth: 800,
         })
@@ -40,11 +41,13 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
         this.numSamplesPerDataset = randomInt(10, 100)
 
         this.savePath = generateId()
+
         this.plotConfigs = [
             this.generatePlotConfig(),
             this.generatePlotConfig(),
             this.generatePlotConfig(),
         ]
+
         this.mimetype = ['image/png', 'image/jpeg'][randomInt(0, 2)] as MimeType
 
         await this.realGrapher.generate({
@@ -56,17 +59,17 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
     protected static async beforeEach() {
         await super.beforeEach()
 
-        SubplotGrapher.CanvasClass = FakeChartJSNodeCanvas
+        SubplotGrapher.Canvas = FakeChartJSNodeCanvas
         SubplotGrapher.sharp = fakeSharp
 
-        this.fakeGrapher = this.Grapher()
+        this.fakeGrapher = this.SubplotGrapher()
         assert.isTruthy(this.fakeGrapher)
     }
 
     @test()
     protected static async canSetAndGetChartJSNodeCanvasClass() {
-        SubplotGrapher.CanvasClass = FakeChartJSNodeCanvas
-        assert.isEqual(SubplotGrapher.CanvasClass, FakeChartJSNodeCanvas)
+        SubplotGrapher.Canvas = FakeChartJSNodeCanvas
+        assert.isEqual(SubplotGrapher.Canvas, FakeChartJSNodeCanvas)
     }
 
     @test()
@@ -314,8 +317,8 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
         })
     }
 
-    private static Grapher(options?: Partial<SubplotGrapherOptions>) {
-        return new SubplotGrapher({
+    private static SubplotGrapher(options?: Partial<SubplotGrapherOptions>) {
+        return SubplotGrapher.Create({
             subplotHeight: this.subplotHeight,
             subplotWidth: this.subplotWidth,
             mimeType: this.mimetype,
