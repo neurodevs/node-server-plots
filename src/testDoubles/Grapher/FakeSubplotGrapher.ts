@@ -2,7 +2,7 @@ import {
     Grapher,
     GrapherGenerateOptions,
     SubplotGrapherOptions,
-} from '../../types/nodeServerPlots.types'
+} from '../../types/nodeServerPlots.types.js'
 
 export default class FakeSubplotGrapher implements Grapher {
     public static callsToConstructor: SubplotGrapherOptions[] = []

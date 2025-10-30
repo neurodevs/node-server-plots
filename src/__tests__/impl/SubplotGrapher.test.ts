@@ -1,19 +1,22 @@
 import { randomInt } from 'crypto'
-import AbstractSpruceTest, { test, assert } from '@sprucelabs/test-utils'
 import generateId from '@neurodevs/generate-id'
-import { ChartTypeRegistry } from 'chart.js'
+import AbstractModuleTest, { test, assert } from '@neurodevs/node-tdd'
 import { MimeType } from 'chartjs-node-canvas'
-import SubplotGrapher from '../../impl/SubplotGrapher'
-import FakeChartJSNodeCanvas from '../../testDoubles/chartjs/FakeChartJSNodeCanvas'
-import fakeSharp, { FakeSharpTracker } from '../../testDoubles/sharp/fakeSharp'
+
+import { ChartTypeRegistryType } from '../../chartjs/importChartjsCjs.js'
+import SubplotGrapher from '../../impl/SubplotGrapher.js'
+import FakeChartJSNodeCanvas from '../../testDoubles/chartjs/FakeChartJSNodeCanvas.js'
+import fakeSharp, {
+    FakeSharpTracker,
+} from '../../testDoubles/sharp/fakeSharp.js'
 import {
     Grapher,
     PlotConfig,
     SubplotGrapherOptions,
     VerticalLineAnnotations,
-} from '../../types/nodeServerPlots.types'
+} from '../../types/nodeServerPlots.types.js'
 
-export default class SubplotGrapherTest extends AbstractSpruceTest {
+export default class SubplotGrapherTest extends AbstractModuleTest {
     private static fakeGrapher: Grapher
     private static subplotHeight: number
     private static subplotWidth: number
@@ -207,7 +210,7 @@ export default class SubplotGrapherTest extends AbstractSpruceTest {
         const { title, datasets, verticalLines } = plotConfig
 
         return {
-            type: 'line' as keyof ChartTypeRegistry,
+            type: 'line' as keyof ChartTypeRegistryType,
             data: {
                 datasets: datasets.map(({ label, data, color }) => {
                     const sortedData = data.sort(

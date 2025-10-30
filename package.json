@@ -1,7 +1,8 @@
 {
   "name": "@neurodevs/node-server-plots",
-  "version": "0.4.2",
+  "version": "0.4.3",
   "description": "Easily create and save plots server-side on Node",
+  "type": "module",
   "keywords": [
     "nodejs",
     "typescript",
@@ -52,12 +53,8 @@
     "sharp": "^0.33.5"
   },
   "devDependencies": {
-    "@neurodevs/generate-id": "^1.0.0",
-    "@sprucelabs/jest-json-reporter": "^8.0.542",
-    "@sprucelabs/resolve-path-aliases": "^2.0.516",
-    "@sprucelabs/spruce-test-fixtures": "^62.4.27",
-    "@sprucelabs/test": "^9.0.59",
-    "@sprucelabs/test-utils": "^5.1.502",
+    "@neurodevs/generate-id": "^1.0.9",
+    "@neurodevs/node-tdd": "^0.2.2",
     "@types/node": "^22.9.0",
     "chokidar-cli": "^3.0.0",
     "concurrently": "^9.1.0",

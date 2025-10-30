@@ -1,10 +1,11 @@
 import { Readable } from 'stream'
-import { ChartConfiguration } from 'chart.js'
 import { ChartJSNodeCanvasOptions, MimeType } from 'chartjs-node-canvas'
+
+import { ChartConfigurationType } from '../../chartjs/importChartjsCjs.js'
 import {
     IChartJSNodeCanvas,
     RenderToBufferOptions,
-} from '../../types/chartJSNodeCanvas.types'
+} from '../../types/chartJSNodeCanvas.types.js'
 
 export default class FakeChartJSNodeCanvas implements IChartJSNodeCanvas {
     public static constructorOptions: ChartJSNodeCanvasOptions[] = []
@@ -15,21 +16,21 @@ export default class FakeChartJSNodeCanvas implements IChartJSNodeCanvas {
     }
 
     public async renderToDataURL(
-        _configuration: ChartConfiguration,
+        _configuration: ChartConfigurationType,
         _mimeType?: MimeType
     ): Promise<string> {
         return ''
     }
 
     public renderToDataURLSync(
-        _configuration: ChartConfiguration,
+        _configuration: ChartConfigurationType,
         _mimeType?: MimeType
     ): string {
         return ''
     }
 
     public async renderToBuffer(
-        configuration: ChartConfiguration,
+        configuration: ChartConfigurationType,
         mimeType?: MimeType
     ): Promise<Buffer> {
         FakeChartJSNodeCanvas.renderToBufferOptions.push({
@@ -40,14 +41,14 @@ export default class FakeChartJSNodeCanvas implements IChartJSNodeCanvas {
     }
 
     public renderToBufferSync(
-        _configuration: ChartConfiguration,
+        _configuration: ChartConfigurationType,
         _mimeType?: MimeType | 'application/pdf' | 'image/svg+xml'
     ): Buffer {
         return {} as Buffer
     }
 
     public renderToStream(
-        _configuration: ChartConfiguration,
+        _configuration: ChartConfigurationType,
         _mimeType?: MimeType | 'application/pdf'
     ): Readable {
         return {} as Readable

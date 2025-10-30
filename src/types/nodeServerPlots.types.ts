@@ -1,5 +1,5 @@
-import { ScatterDataPoint } from 'chart.js'
 import { MimeType } from 'chartjs-node-canvas'
+import { ScatterDataPointType } from '../chartjs/importChartjsCjs.js'
 
 export interface Grapher {
     generate(options: GrapherGenerateOptions): Promise<void>
@@ -28,7 +28,7 @@ export interface PlotConfig {
 
 export interface Dataset {
     label: string
-    data: ScatterDataPoint[]
+    data: ScatterDataPointType[]
     color: string
 }
 

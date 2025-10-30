@@ -1,8 +1,9 @@
-import { Chart, ChartTypeRegistry } from 'chart.js'
 import { ChartJSNodeCanvas, MimeType } from 'chartjs-node-canvas'
-import annotationPlugin from 'chartjs-plugin-annotation'
 import sharp from 'sharp'
-import { ChartJSNodeCanvasClass } from '../types/chartJSNodeCanvas.types'
+
+import { Chart, ChartTypeRegistryType } from '../chartjs/importChartjsCjs.js'
+import { annotationPlugin } from '../chartjs/importChartjsPluginAnnotationCjs.js'
+import { ChartJSNodeCanvasClass } from '../types/chartJSNodeCanvas.types.js'
 import {
     Dataset,
     Grapher,
@@ -11,10 +12,12 @@ import {
     SubplotGrapherClass,
     SubplotGrapherOptions,
     VerticalLineAnnotations,
-} from '../types/nodeServerPlots.types'
-import { SharpType } from '../types/sharp.types'
+} from '../types/nodeServerPlots.types.js'
+import { SharpType } from '../types/sharp.types.js'
 
-Chart.register(annotationPlugin)
+if (annotationPlugin) {
+    Chart.register(annotationPlugin)
+}
 
 export default class SubplotGrapher implements Grapher {
     public static Class?: SubplotGrapherClass
@@ -74,7 +77,7 @@ export default class SubplotGrapher implements Grapher {
         const { title, datasets, verticalLines } = this.currentPlotConfig
 
         return {
-            type: 'line' as keyof ChartTypeRegistry,
+            type: 'line' as keyof ChartTypeRegistryType,
             data: {
                 datasets: this.generateDatasets(datasets),
             },

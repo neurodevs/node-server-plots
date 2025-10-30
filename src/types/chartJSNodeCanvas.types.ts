@@ -1,6 +1,7 @@
 import { Readable } from 'stream'
-import { ChartConfiguration } from 'chart.js'
 import { ChartJSNodeCanvasOptions, MimeType } from 'chartjs-node-canvas'
+
+import { ChartConfigurationType } from '../chartjs/importChartjsCjs.js'
 
 export interface IChartJSNodeCanvas {
     /**
@@ -9,7 +10,7 @@ export interface IChartJSNodeCanvas {
      * @param mimeType The image format, `image/png` or `image/jpeg`.
      */
     renderToDataURL(
-        configuration: ChartConfiguration,
+        configuration: ChartConfigurationType,
         mimeType?: MimeType
     ): Promise<string>
 
@@ -19,7 +20,7 @@ export interface IChartJSNodeCanvas {
      * @param mimeType The image format, `image/png` or `image/jpeg`.
      */
     renderToDataURLSync(
-        configuration: ChartConfiguration,
+        configuration: ChartConfigurationType,
         mimeType?: MimeType
     ): string
 
@@ -29,7 +30,7 @@ export interface IChartJSNodeCanvas {
      * @param mimeType A string indicating the image format.
      */
     renderToBuffer(
-        configuration: ChartConfiguration,
+        configuration: ChartConfigurationType,
         mimeType?: MimeType
     ): Promise<Buffer>
 
@@ -39,7 +40,7 @@ export interface IChartJSNodeCanvas {
      * @param mimeType A string indicating the image format.
      */
     renderToBufferSync(
-        configuration: ChartConfiguration,
+        configuration: ChartConfigurationType,
         mimeType?: MimeType | 'application/pdf' | 'image/svg+xml'
     ): Buffer
 
@@ -49,7 +50,7 @@ export interface IChartJSNodeCanvas {
      * @param mimeType A string indicating the image format.
      */
     renderToStream(
-        configuration: ChartConfiguration,
+        configuration: ChartConfigurationType,
         mimeType?: MimeType | 'application/pdf'
     ): Readable
 
@@ -74,6 +75,6 @@ export type ChartJSNodeCanvasClass = new (
 ) => IChartJSNodeCanvas
 
 export interface RenderToBufferOptions {
-    configuration: ChartConfiguration
+    configuration: ChartConfigurationType
     mimeType?: MimeType
 }
