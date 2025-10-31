@@ -1,6 +1,6 @@
 import { randomInt } from 'crypto'
 import generateId from '@neurodevs/generate-id'
-import AbstractModuleTest, { test, assert } from '@neurodevs/node-tdd'
+import { test, assert } from '@neurodevs/node-tdd'
 import { MimeType } from 'chartjs-node-canvas'
 
 import { ChartTypeRegistryType } from '../../chartjs/importChartjsCjs.js'
@@ -15,8 +15,9 @@ import {
     SubplotGrapherOptions,
     VerticalLineAnnotations,
 } from '../../types/nodeServerPlots.types.js'
+import AbstractPackageTest from '../AbstractPackageTest.js'
 
-export default class SubplotGrapherTest extends AbstractModuleTest {
+export default class SubplotGrapherTest extends AbstractPackageTest {
     private static fakeGrapher: Grapher
     private static subplotHeight: number
     private static subplotWidth: number
