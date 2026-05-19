@@ -44,10 +44,7 @@ esm/
 
 tmp/
 
-yarn.lock
 package-lock.json
-
-**/.spruce/*cache.json
 
 *.png
 build/
