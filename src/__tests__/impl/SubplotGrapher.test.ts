@@ -1,7 +1,8 @@
-import { randomInt } from 'crypto'
+import { randomInt } from 'node:crypto'
+
+import { MimeType } from 'chartjs-node-canvas'
 import generateId from '@neurodevs/generate-id'
 import { test, assert } from '@neurodevs/node-tdd'
-import { MimeType } from 'chartjs-node-canvas'
 
 import { ChartTypeRegistryType } from '../../chartjs/importChartjsCjs.js'
 import SubplotGrapher from '../../impl/SubplotGrapher.js'

@@ -1,4 +1,5 @@
-import { Readable } from 'stream'
+import { Readable } from 'node:stream'
+
 import { ChartJSNodeCanvasOptions, MimeType } from 'chartjs-node-canvas'
 
 import { ChartConfigurationType } from '../../chartjs/importChartjsCjs.js'
